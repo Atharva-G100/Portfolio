@@ -2,10 +2,10 @@
    Landing Scroll Animation
    ============================================ */
 
-/* Tall scroll container — gives room for the scrub */
+/* Tall scroll container — reduced from 500vh for less scrolling */
 .landing-scroll-container {
     position: relative;
-    height: 500vh;
+    height: 350vh;
     background: #000;
 }
 

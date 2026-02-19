@@ -42,15 +42,11 @@ const LandingAnimation = ({ onComplete }) => {
         imagesRef.current = images;
     }, []);
 
-    // Draw a frame onto the canvas
-    const drawFrame = useCallback((index) => {
+    // Resize canvas and handle high-DPI displays
+    const updateCanvasSize = useCallback(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const img = imagesRef.current[index];
-        if (!img) return;
 
-        // Set canvas size to match image aspect ratio within viewport
         const dpr = window.devicePixelRatio || 1;
         const vw = window.innerWidth;
         const vh = window.innerHeight;
@@ -59,7 +55,21 @@ const LandingAnimation = ({ onComplete }) => {
         canvas.height = vh * dpr;
         canvas.style.width = `${vw}px`;
         canvas.style.height = `${vh}px`;
+
+        const ctx = canvas.getContext('2d');
         ctx.scale(dpr, dpr);
+    }, []);
+
+    // Draw a frame onto the canvas
+    const drawFrame = useCallback((index) => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const img = imagesRef.current[index];
+        if (!img) return;
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
 
         // Draw image covering the canvas (object-fit: cover behavior)
         const imgRatio = img.width / img.height;
@@ -87,7 +97,8 @@ const LandingAnimation = ({ onComplete }) => {
     useEffect(() => {
         if (!loaded) return;
 
-        // Draw the first frame immediately
+        // Initial sizing and draw
+        updateCanvasSize();
         drawFrame(0);
 
         const obj = { frame: 0 };
@@ -97,7 +108,7 @@ const LandingAnimation = ({ onComplete }) => {
                 trigger: containerRef.current,
                 start: 'top top',
                 end: 'bottom bottom',
-                scrub: 0.5,
+                scrub: 0.15, // Reduced from 0.5 for snappier feel
                 onUpdate: (self) => {
                     // When scroll reaches the end, mark animation done
                     if (self.progress >= 0.98) {
@@ -118,6 +129,7 @@ const LandingAnimation = ({ onComplete }) => {
 
         // Handle resize
         const handleResize = () => {
+            updateCanvasSize();
             drawFrame(Math.round(obj.frame));
         };
         window.addEventListener('resize', handleResize);
@@ -127,7 +139,7 @@ const LandingAnimation = ({ onComplete }) => {
             ScrollTrigger.getAll().forEach((t) => t.kill());
             window.removeEventListener('resize', handleResize);
         };
-    }, [loaded, drawFrame]);
+    }, [loaded, drawFrame, updateCanvasSize]);
 
     // When animation is done and user continues scrolling, complete
     useEffect(() => {
