@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import TargetCursor from './components/TargetCursor';
 import LandingAnimation from './components/LandingAnimation';
+import BackToTop from './components/BackToTop';
 
 function App() {
   const [introComplete, setIntroComplete] = useState(false);
@@ -17,18 +18,28 @@ function App() {
 
   return (
     <>
-      {/* Landing scroll animation — completely separate from the portfolio */}
+      {/* Skip to content link for keyboard users */}
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
+
+      {/* Landing scroll animation */}
       <LandingAnimation onComplete={handleIntroComplete} />
 
-      {/* Existing portfolio — untouched, renders naturally after the scroll container */}
+      {/* Existing portfolio with semantic landmarks */}
       <div className="app-container">
         <TargetCursor targetSelector=".btn, .glass-card" />
         <Navbar />
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
+        <main id="main-content">
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+        </main>
+        <footer>
+          <Contact />
+        </footer>
+        <BackToTop />
       </div>
     </>
   );

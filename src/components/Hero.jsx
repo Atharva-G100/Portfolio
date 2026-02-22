@@ -170,6 +170,7 @@ const Hero = () => {
     return (
         <section
             id="hero"
+            aria-label="Introduction — Atharva Gawas"
             style={{
                 minHeight: '100vh',
                 display: 'flex',

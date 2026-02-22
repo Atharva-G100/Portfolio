@@ -20,7 +20,7 @@ const Contact = () => {
         setStatus('submitting');
 
         try {
-            const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+            const response = await fetch("https://formspree.io/f/xdalwrnn", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,7 +40,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" style={{ paddingBottom: '4rem' }}>
+        <section id="contact" aria-label="Contact Atharva Gawas" style={{ paddingBottom: '4rem' }}>
             <div style={{
                 maxWidth: '600px',
                 margin: '0 auto',
@@ -93,7 +93,7 @@ const Contact = () => {
                     ) : (
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                             <div>
-                                <label style={{
+                                <label htmlFor="contact-name" style={{
                                     display: 'block',
                                     fontFamily: 'var(--font-mono)',
                                     fontSize: '0.8rem',
@@ -103,6 +103,7 @@ const Contact = () => {
                                     Name
                                 </label>
                                 <input
+                                    id="contact-name"
                                     type="text"
                                     name="name"
                                     value={formData.name}
@@ -124,7 +125,7 @@ const Contact = () => {
                             </div>
 
                             <div>
-                                <label style={{
+                                <label htmlFor="contact-email" style={{
                                     display: 'block',
                                     fontFamily: 'var(--font-mono)',
                                     fontSize: '0.8rem',
@@ -134,6 +135,7 @@ const Contact = () => {
                                     Email
                                 </label>
                                 <input
+                                    id="contact-email"
                                     type="email"
                                     name="email"
                                     value={formData.email}
@@ -155,7 +157,7 @@ const Contact = () => {
                             </div>
 
                             <div>
-                                <label style={{
+                                <label htmlFor="contact-message" style={{
                                     display: 'block',
                                     fontFamily: 'var(--font-mono)',
                                     fontSize: '0.8rem',
@@ -165,6 +167,7 @@ const Contact = () => {
                                     Message
                                 </label>
                                 <textarea
+                                    id="contact-message"
                                     name="message"
                                     value={formData.message}
                                     onChange={handleChange}

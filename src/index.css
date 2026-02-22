@@ -3,6 +3,43 @@
 @tailwind utilities;
 
 /* ============================================
+   Smooth Scroll & Accessibility
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  /* offset for fixed navbar */
+}
+
+/* Keyboard focus indicator */
+*:focus-visible {
+  outline: 2px solid #00ff41;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip to content (visually hidden until focused) */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: #07070d;
+  color: #00ff41;
+  border: 1px solid #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* ============================================
    DESIGN SYSTEM — Dark Futuristic Theme
    ============================================ */
 
@@ -306,6 +343,34 @@ h2 {
   section {
     padding: 4rem 0;
   }
+
+  /* Hide desktop nav, show hamburger */
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mobile-hamburger {
+    display: block !important;
+  }
+
+  .mobile-nav-drawer {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-hamburger {
+    display: none !important;
+  }
+
+  .mobile-nav-drawer {
+    display: none !important;
+  }
+}
+
+/* Footer reset */
+footer {
+  width: 100%;
 }
 
 @layer base {
